@@ -12,73 +12,83 @@ const render = require("./lib/htmlRenderer");
 
 const teamMembers = [];
 
-
-
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
 function promptUser() {
   return inquirer.prompt([
-    { type: "confirm",
+    {
+      type: "confirm",
       name: "validate",
-      message:"are you manager?"
-
+      message: "are you manager?",
     },
     {
       type: "input",
       name: "name",
-      message: "What is your name?"
+      message: "What is your name?",
     },
     {
       type: "input",
       name: "id",
-      message: "What is your id?"
+      message: "What is your id?",
     },
     {
       type: "input",
       name: "email",
-      message: "What is your email address?"
+      message: "What is your email address?",
     },
     {
       type: "input",
       name: "officeNumber",
-      message:"what is your office number?"
+      message: "what is your office number?",
     },
-    
-  ])
+  ]);
 }
 
-function teamSelect(){
-  return inquirer.prompt([{
-    type:"list",
-    name:"teamMembers",
-    message:"Would you like to add a team?",
-    choices:[
-      "engineer",
-      "intern",
-      "NO"
-    ]
-  }]).then(function(choice){
-    
-    switch(choice.teamMembers){
-      case "engineer":
-        engQuestion().then(function(egdata){
-  
-          const engineer = new Engineer(answers.name, answers.id, answers.email, egdata.github);
-          teamMembers.push(engineer);
-          console.log(teamMembers);
-          
-      }); break 
-      case "intern": 
-      
-     intQuestion().then(function(indata){
-  
-        const intern = new Intern(answers.name, answers.id, answers.email, indata.officeNumber);
-        teamMembers.push(intern);
-    });break; 
-    }
+function teamSelect() {
+  return inquirer
+    .prompt([
+      {
+        type: "list",
+        name: "teamMembers",
+        message: "Would you like to add a team?",
+        choices: ["engineer", "intern", "NO"],
+      },
+    ])
+    .then(function (choice) {
+      switch (choice.teamMembers) {
+        case "engineer":
+          engQuestion().then(function (answers) {
+            const engineer = new Engineer(
+              answers.name,
+              answers.id,
+              answers.email,
+              answers.github
+            );
+            teamMembers.push(engineer);
+            console.log(teamMembers);
+            teamSelect();
+          });
+          break;
 
-  })
+        case "intern":
+          intQuestion().then(function (answers) {
+            const intern = new Intern(
+              answers.name,
+              answers.id,
+              answers.email,
+              answers.school
+            );
+            teamMembers.push(intern);
+            console.log(teamMembers);
+            teamSelect();
+          });
+          break;
+        case "NO":
+          finalize();
+          break;
+      }
+    });
 }
 
 function engQuestion() {
@@ -86,24 +96,24 @@ function engQuestion() {
     {
       type: "input",
       name: "name",
-      message: "What is your name?"
+      message: "What is your name?",
     },
     {
       type: "input",
       name: "id",
-      message: "What is your id?"
+      message: "What is your id?",
     },
     {
       type: "input",
       name: "email",
-      message: "What is your email address?"
-    },{
+      message: "What is your email address?",
+    },
+    {
       type: "input",
       name: "github",
-      message:"what is your github user name?"
-    }
-  ])
-  
+      message: "what is your github user name?",
+    },
+  ]);
 }
 
 function intQuestion() {
@@ -111,68 +121,47 @@ function intQuestion() {
     {
       type: "input",
       name: "name",
-      message: "What is your name?"
+      message: "What is your name?",
     },
     {
       type: "input",
       name: "id",
-      message: "What is your id?"
+      message: "What is your id?",
     },
     {
       type: "input",
       name: "email",
-      message: "What is your email address?"
+      message: "What is your email address?",
     },
     {
       type: "input",
       name: "school",
-      message:"what is the name of your school?"
-    }
-  ])
- 
+      message: "what is the name of your school?",
+    },
+  ]);
 }
-promptUser().then(function(answers){
-
-  switch(answers.validate){
-    case true: this.role = "manager"
-    const manager = new Manager(answers.name, answers.id, answers.email, role, answers.officeNumber)
-    teamMembers.push(manager);
-    teamSelect();
+promptUser().then(function (answers) {
+  switch (answers.validate) {
+    case true:
+      this.role = "manager";
+      const manager = new Manager(
+        answers.name,
+        answers.id,
+        answers.email,
+        answers.officeNumber
+      );
+      teamMembers.push(manager);
+      teamSelect();
   }
-  teamSelect().then(function(choice){
-
-    switch (choice.teamMembers){
-   
-    case "engineer": 
-      
-     engQuestion().then(function(egdata){
-  
-        const engineer = new Engineer(answers.name, answers.id, answers.email, egdata.github);
-        teamMembers.push(engineer);
-        console.log(teamMembers);
-        
-    }); break 
-    case "intern": 
-      
-     intQuestion().then(function(indata){
-  
-        const intern = new Intern(answers.name, answers.id, answers.email, indata.officeNumber);
-        teamMembers.push(intern);
-    });break;
-    case "NO": 
-      
-    intQuestion().then(function(indata){
- 
-       const intern = new Intern(answers.name, answers.id, answers.email, indata.officeNumber);
-       console.log(intern);
-   });break;
-  }
-  
-  })
 });
-
-
-
+function finalize(){
+  let renderer = render(teamMembers)
+fs.writeFile(outputPath, renderer, (err)=>{
+  if(err)
+    throw err;
+    console.log(err);
+});
+}
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
@@ -183,12 +172,6 @@ promptUser().then(function(answers){
 // Hint: you may need to check if the `output` folder exists and create it if it
 // does not.
 
-// fs.writeFile(outputPath, data, (err)=>{
-//   if(err)
-//     throw err;
-//     console.log(err)
-  
-// });
 // HINT: each employee type (manager, engineer, or intern) has slightly different
 // information; write your code to ask different questions via inquirer depending on
 // employee type.

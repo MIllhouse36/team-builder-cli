@@ -5,6 +5,7 @@ class Employee{
     this.id = id;
     this.email = email;
     this.role = role
+    this.getName();
   }
   getName(){
     return this.name;
