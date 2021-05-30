@@ -1,5 +1,5 @@
 {
-  "name": "teambuildercli",
+  "name": "team-builder-cli",
   "version": "1.0.0",
   "description": "OOP and testing",
   "main": "app.js",
@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MIllhouse36/teambuildercli.git"
+    "url": "git+https://github.com/MIllhouse36/team-builder-cli.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/MIllhouse36/teambuildercli/issues"
+    "url": "https://github.com/MIllhouse36/team-builder-cli/issues"
   },
-  "homepage": "https://github.com/MIllhouse36/teambuildercli",
+  "homepage": "https://github.com/MIllhouse36/team-builder-cli",
   "dependencies": {
     "inquirer": "^6.3.1"
   },
