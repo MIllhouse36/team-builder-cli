@@ -1,18 +1,4 @@
-# CLI teambuilder 
-## Table of Contents 
-[Descriptions](#Descriptions)
-
-[Installation](#Installation)
-
-[Usage](#Usage)
-
-[License](#License)
-
-[Test](#Test)
-
-[Contribution](#Contribution)
-
-[Questions](#Questions)
+# team-builder-cli
 
 ## Descriptions
 This CLI app generates  a page for a software engineering team so manager can have quick access to emails and github profiles. 
