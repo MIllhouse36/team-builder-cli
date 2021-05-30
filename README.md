@@ -5,7 +5,7 @@ This CLI app generates  a page for a software engineering team so manager can ha
 ## Installation
 npm install
 ## Usage
-it's practice
+
 ## License
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ## Test
