@@ -1,7 +1,7 @@
 {
-  "name": "unit10hw",
+  "name": "teambuildercli",
   "version": "1.0.0",
-  "description": "OOP and testing for week 10 homework",
+  "description": "OOP and testing",
   "main": "app.js",
   "directories": {
     "lib": "lib",
